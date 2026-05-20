@@ -1,22 +1,33 @@
 {
 	"name": "sqlervice",
 	"properties": {
+		"parameters": {
+			"ServerName": {
+				"type": "string"
+			},
+			"DatabaseName": {
+				"type": "string"
+			},
+			"UserName": {
+				"type": "string"
+			}
+		},
 		"annotations": [],
 		"type": "AzureSqlDatabase",
 		"typeProperties": {
-			"server": "assignmentday13servername.database.windows.net",
-			"database": "sectforsql",
+			"server": "@{linkedService().ServerName}",
+			"database": "@{linkedService().DatabaseName}",
 			"encrypt": "mandatory",
 			"trustServerCertificate": false,
 			"authenticationType": "SQL",
-			"userName": "sqladmin",
+			"userName": "@{linkedService().UserName}",
 			"password": {
 				"type": "AzureKeyVaultSecret",
 				"store": {
 					"referenceName": "keyforall",
 					"type": "LinkedServiceReference"
 				},
-				"secretName": "sectforsql"
+				"secretName": "sqldb"
 			}
 		}
 	}
