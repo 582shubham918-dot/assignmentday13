@@ -27,7 +27,7 @@
 					"referenceName": "keyforall",
 					"type": "LinkedServiceReference"
 				},
-				"secretName": "sqldb"
+				"secretName": "sectforsql"
 			}
 		}
 	}
