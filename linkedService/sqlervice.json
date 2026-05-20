@@ -1,0 +1,23 @@
+{
+	"name": "sqlervice",
+	"properties": {
+		"annotations": [],
+		"type": "AzureSqlDatabase",
+		"typeProperties": {
+			"server": "assignmentday13servername.database.windows.net",
+			"database": "sectforsql",
+			"encrypt": "mandatory",
+			"trustServerCertificate": false,
+			"authenticationType": "SQL",
+			"userName": "sqladmin",
+			"password": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "keyforall",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "sectforsql"
+			}
+		}
+	}
+}
