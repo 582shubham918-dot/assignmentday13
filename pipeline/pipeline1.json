@@ -5,8 +5,6 @@
 			{
 				"name": "PL_SQL_Incremental_Load_To_ADLS",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Lookup_New_Watermark",
@@ -26,7 +24,10 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderQuery": "SELECT *\nFROM @{pipeline().parameters.sourceSchemaName}.@{pipeline().parameters.sourceTableName}\nWHERE @{pipeline().parameters.watermarkColumn} >\n    '@{activity('LookupOldWatermark').output.firstRow.last_watermark_value}'\nAND @{pipeline().parameters.watermarkColumn} <=\n    '@{activity('LookupNewWatermark').output.firstRow.new_watermark_value}'",
+						"sqlReaderQuery": {
+							"value": "SELECT *\nFROM @{pipeline().parameters.sourceSchemaName}.@{pipeline().parameters.sourceTableName}\nWHERE @{pipeline().parameters.watermarkColumn} >\n    '@{activity('LookupOldWatermark').output.firstRow.last_watermark_value}'\nAND @{pipeline().parameters.watermarkColumn} <=\n    '@{activity('LookupNewWatermark').output.firstRow.new_watermark_value}'",
+							"type": "Expression"
+						},
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
@@ -78,7 +79,10 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderQuery": "SELECT last_watermark_value\nFROM dbo.pipeline_watermark\nWHERE source_table_name = '@{pipeline().parameters.sourceTableName}'",
+						"sqlReaderQuery": {
+							"value": "SELECT last_watermark_value\nFROM dbo.pipeline_watermark\nWHERE source_table_name = '@{pipeline().parameters.sourceTableName}'",
+							"type": "Expression"
+						},
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
@@ -110,7 +114,10 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderQuery": "SELECT MAX(@{pipeline().parameters.watermarkColumn}) AS new_watermark_value\nFROM @{pipeline().parameters.sourceSchemaName}.@{pipeline().parameters.sourceTableName}\n",
+						"sqlReaderQuery": {
+							"value": "SELECT MAX(@{pipeline().parameters.watermarkColumn}) AS new_watermark_value\nFROM @{pipeline().parameters.sourceSchemaName}.@{pipeline().parameters.sourceTableName}\n",
+							"type": "Expression"
+						},
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
