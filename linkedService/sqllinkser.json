@@ -1,0 +1,23 @@
+{
+	"name": "sqllinkser",
+	"properties": {
+		"annotations": [],
+		"type": "AzureSqlDatabase",
+		"typeProperties": {
+			"server": "assignmentday13servername.database.windows.net",
+			"database": "sqldb",
+			"encrypt": "mandatory",
+			"trustServerCertificate": false,
+			"authenticationType": "SQL",
+			"userName": "sqladmin",
+			"password": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "keyforall",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "sectforsql"
+			}
+		}
+	}
+}
